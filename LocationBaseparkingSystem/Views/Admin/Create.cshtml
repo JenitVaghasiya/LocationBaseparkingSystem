@@ -24,94 +24,94 @@
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.CreatedDate)
-    <div class="row">
-        <div class="col-md-4">
-            <div class="Compose-Message">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Personal information
-                    </div>
-                    <div class="panel-body">
-                        <div class="">
-                            <label> Name : </label>
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="spacet-10">
-                            <label> Email : </label>
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="spacet-10">
-                            @Html.EditorFor(model => model.IsActive)
-                            <label> Is Active</label>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="Compose-Message">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Personal information
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="Compose-Message">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Address information
+                <div class="panel-body">
+                    <div class="">
+                        <label> Name : </label>
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
-                    <div class="panel-body">
-                        <div class="">
-                            <label>Address : </label>
-                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="spacet-10">
-                            <label> Longitude : </label>
-                            @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="spacet-10">
-                            <label> Latitude : </label>
-                            @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="spacet-10">
+                        <label> Email : </label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="Compose-Message">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        Parking information
-                    </div>
-                    <div class="panel-body">
-                        <div class="">
-                            <label> Parking Space : </label>
-                            @Html.EditorFor(model => model.NoOfParkingSpace, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NoOfParkingSpace, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="spacet-10">
-                            <label> Rate per Hour : </label>
-                            @Html.EditorFor(model => model.HourRate, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HourRate, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="spacet-10">
+                        @Html.EditorFor(model => model.IsActive)
+                        <label> Is Active</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <hr />
-            <input type="submit" name="submit" class="btn btn-success btn-lg" value="Submit" />
+    <div class="col-md-4">
+        <div class="Compose-Message">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    Address information
+                </div>
+                <div class="panel-body">
+                    <div class="">
+                        <label>Address : </label>
+                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="spacet-10">
+                        <label> Longitude : </label>
+                        @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="spacet-10">
+                        <label> Latitude : </label>
+                        @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="Compose-Message">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    Parking information
+                </div>
+                <div class="panel-body">
+                    <div class="">
+                        <label> Parking Space : </label>
+                        @Html.EditorFor(model => model.NoOfParkingSpace, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NoOfParkingSpace, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="spacet-10">
+                        <label> Rate per Hour : </label>
+                        @Html.EditorFor(model => model.HourRate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HourRate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <hr />
+        <input type="submit" name="submit" class="btn btn-success btn-lg" value="Submit" />
+    </div>
+</div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script type="text/javascript">
+<script type="text/javascript">
         function onSubmit() {
             $("#vendordetail").submit();
         }
-    </script>
+</script>
 }
