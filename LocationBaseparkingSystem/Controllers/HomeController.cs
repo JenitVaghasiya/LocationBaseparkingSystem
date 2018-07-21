@@ -10,7 +10,20 @@ namespace LocationBaseparkingSystem.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                ViewBag.UserName = User.Identity.Name;
+                return RedirectToAction("Index", "Admin");
+            }
+            else if (User.Identity.IsAuthenticated && User.IsInRole("VendorAdmin"))
+            {
+                ViewBag.UserName = User.Identity.Name;
+                return RedirectToAction("Index", "Vendor");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult About()
