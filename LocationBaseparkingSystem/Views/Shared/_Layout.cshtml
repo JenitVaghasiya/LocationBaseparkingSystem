@@ -94,49 +94,52 @@
             </div>
         </div>
     </div>
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="/account/logoff">Logout</a></li>
-                        </ul>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <section class="menu-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="navbar-collapse collapse ">
+                            <ul id="menu-top" class="nav navbar-nav navbar-right">
+                                <li><a href="/account/logoff">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
+        <!-- LOGO HEADER END-->
+        <!-- MENU SECTION END-->
+        <div class="content-wrapper">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- CONTENT-WRAPPER SECTION END-->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        &copy; @DateTime.Now.Year ParkOn | Created with <i class="fa fa-heart"></i>  By ParkOn
                     </div>
                 </div>
-
             </div>
-        </div>
-    </section>
-    <!-- LOGO HEADER END-->
-    <!-- MENU SECTION END-->
-    <div class="content-wrapper">
-        <div class="container">
-            @RenderBody()
-        </div>
-    </div>
-    <!-- CONTENT-WRAPPER SECTION END-->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; @DateTime.Now.Year ParkOn | Created with <i class="fa fa-heart"></i>  By ParkOn
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- FOOTER SECTION END-->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    <script type="text/javascript">
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "350px";
-        }
+        </footer>
+        <!-- FOOTER SECTION END-->
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script type="text/javascript">
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "350px";
+            }
 
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-    </script>
-</body>
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+    </body>
 </html>
