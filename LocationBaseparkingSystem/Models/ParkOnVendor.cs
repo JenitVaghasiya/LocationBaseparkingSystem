@@ -34,4 +34,20 @@ namespace LocationBaseparkingSystem.Models
         public string Area { get; set; }
         
     }
+
+    public class ParkOnVendorModel
+    {
+        public string Name { get; set; }
+
+        public decimal? Longitude { get; set; }
+
+        public decimal? Latitude { get; set; }
+
+        public string Address { get; set; }
+
+        public int? NoOfParkingSpace { get; set; }
+
+        public int? NoOfRemainingParking { get; set; }
+
+    }
 }
