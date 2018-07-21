@@ -46,7 +46,9 @@ function GetParksOnvendors(latitude, longitude) {
                 resulthtml += '<div class="dashboard-div-wrapper bk-clr-two">';
                 resulthtml += '<i id="AvailableParkingCount" class="fa dashboard-div-icon" >' + item.NoOfParkingSpace + '</i>';
                 resulthtml += '<h4>' + item.Name + '</h4>';
-                resulthtml += '<h5>' + item.Address + '</h5>';
+                if (item.Address != undefined && item.Address != '' && item.Address != null) {
+                    resulthtml += '<h5>' + item.Address + '</h5>';
+                }
                 resulthtml += '</div>';
                 resulthtml += '</div>';
             });
