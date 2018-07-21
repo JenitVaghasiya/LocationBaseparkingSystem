@@ -8,12 +8,48 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LocationBaseparkingSystem.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LocationBaseparkingSystem.Controllers
 {
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        public AdminController()
+        {
+        }
+
+        public AdminController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Admin
         public async Task<ActionResult> Index()
@@ -49,14 +85,41 @@ namespace LocationBaseparkingSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Email,Name,Longitude,Latitude,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area")] ParkOnVendor parkOnVendor)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.ParkOnVendor.Add(parkOnVendor);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Email == parkOnVendor.Email);
+                    if (user != null)
+                    {
+                        var vendor = db.ParkOnVendor.FirstOrDefault(u => u.UserId == user.Id);
+                        if (vendor != null)
+                        {
+                            parkOnVendor.UserId = user.Id;
+                            vendor = parkOnVendor;
+                        }
+                    }
+                    else
+                    {
+                        var usr = new ApplicationUser { UserName = parkOnVendor.Email, Email = parkOnVendor.Email };
+                        var result = await UserManager.CreateAsync(usr, "P@$$w0rd");
+                        if (result.Succeeded)
+                        {
+                            await UserManager.AddToRoleAsync(usr.Id, "VendorAdmin");
+                            parkOnVendor.UserId = usr.Id;
+                            parkOnVendor.CreatedDate = DateTime.Now;
+                            db.ParkOnVendor.Add(parkOnVendor);
 
-            return View(parkOnVendor);
+                        }
+                    }
+                    await db.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return View();
         }
 
         // GET: Admin/Edit/5
