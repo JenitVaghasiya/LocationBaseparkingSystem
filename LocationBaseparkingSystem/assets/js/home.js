@@ -44,7 +44,7 @@ function GetParksOnvendors(latitude, longitude) {
             $.each(data, function (i, item) {
                 resulthtml += '<div class="col-md-3 col-sm-3 col-xs-6">';
                 resulthtml += '<div class="dashboard-div-wrapper bk-clr-two">';
-                resulthtml += '<i id="AvailableParkingCount" class="fa dashboard-div-icon" >' + item.NoOfParkingSpace + '</i>';
+                resulthtml += '<i id="AvailableParkingCount" class="fa dashboard-div-icon" >' + item.NoOfRemainingParking + '</i>';
                 resulthtml += '<h4>' + item.Name + '</h4>';
                 if (item.Address != undefined && item.Address != '' && item.Address != null) {
                     resulthtml += '<h5>' + item.Address + '</h5>';
