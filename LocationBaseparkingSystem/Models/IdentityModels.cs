@@ -30,6 +30,6 @@ namespace LocationBaseparkingSystem.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<LocationBaseparkingSystem.Models.ParkOnVendor> ParkOnVendors { get; set; }
+        public System.Data.Entity.DbSet<LocationBaseparkingSystem.Models.ParkOnVendor> ParkOnVendor { get; set; }
     }
 }

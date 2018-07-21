@@ -8,7 +8,7 @@ namespace LocationBaseparkingSystem.Migrations
         public override void Up()
         {
             CreateTable(
-               "dbo.ParkOnVendor",
+               "dbo.ParkOnVendors",
                c => new
                {
                    Id = c.Int(nullable: false, identity: true),
@@ -39,12 +39,13 @@ namespace LocationBaseparkingSystem.Migrations
                    CarNo = c.String(nullable: false, maxLength: 200),
                    EntryTime = c.DateTime(defaultValue: DateTime.Now),
                    ExitTime = c.DateTime(nullable: true),
-                   IsOut = c.Boolean(nullable: false,defaultValue: false),
+                   IsOut = c.Boolean(nullable: false, defaultValue: false),
                    TotalHours = c.Decimal(nullable: true),
                    TotalCost = c.Decimal(nullable: true)
                })
-               .PrimaryKey(t => new { t.Id })
-               .ForeignKey("dbo.ParkOnVendor", t => t.VenderID, cascadeDelete: true);
+               .PrimaryKey(t => new { t.Id });
+
+            AddForeignKey("dbo.ParkOnVendorTrans", "VenderID", "dbo.ParkOnVendors", "Id");
         }
 
         public override void Down()

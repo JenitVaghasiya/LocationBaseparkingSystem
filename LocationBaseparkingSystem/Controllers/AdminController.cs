@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -15,19 +16,19 @@ namespace LocationBaseparkingSystem.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.ParkOnVendors.ToList());
+            return View(await db.ParkOnVendor.ToListAsync());
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ParkOnVendor parkOnVendor = db.ParkOnVendors.Find(id);
+            ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
             if (parkOnVendor == null)
             {
                 return HttpNotFound();
@@ -43,15 +44,15 @@ namespace LocationBaseparkingSystem.Controllers
 
         // POST: Admin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserId,Name,Long,Lat,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area,Email")] ParkOnVendor parkOnVendor)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Email,Name,Longitude,Latitude,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area")] ParkOnVendor parkOnVendor)
         {
             if (ModelState.IsValid)
             {
-                db.ParkOnVendors.Add(parkOnVendor);
-                db.SaveChanges();
+                db.ParkOnVendor.Add(parkOnVendor);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -59,13 +60,13 @@ namespace LocationBaseparkingSystem.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ParkOnVendor parkOnVendor = db.ParkOnVendors.Find(id);
+            ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
             if (parkOnVendor == null)
             {
                 return HttpNotFound();
@@ -75,28 +76,28 @@ namespace LocationBaseparkingSystem.Controllers
 
         // POST: Admin/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserId,Name,Long,Lat,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area,Email")] ParkOnVendor parkOnVendor)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,Email,Name,Longitude,Latitude,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area")] ParkOnVendor parkOnVendor)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(parkOnVendor).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(parkOnVendor);
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ParkOnVendor parkOnVendor = db.ParkOnVendors.Find(id);
+            ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
             if (parkOnVendor == null)
             {
                 return HttpNotFound();
@@ -107,11 +108,11 @@ namespace LocationBaseparkingSystem.Controllers
         // POST: Admin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ParkOnVendor parkOnVendor = db.ParkOnVendors.Find(id);
-            db.ParkOnVendors.Remove(parkOnVendor);
-            db.SaveChanges();
+            ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
+            db.ParkOnVendor.Remove(parkOnVendor);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
