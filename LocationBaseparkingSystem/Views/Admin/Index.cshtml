@@ -36,31 +36,42 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Email</td>
-                            <td>@item.NoOfParkingSpace</td>
-                            <td>@item.Latitude - @item.Longitude</td>
-                            <td>@item.HourRate</td>
-                            @if (item.IsActive)
-                            {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.NoOfParkingSpace</td>
+                                <td>@item.Latitude - @item.Longitude</td>
+                                <td>@item.HourRate</td>
+                                @if (item.IsActive)
+                                {
+                                    <td>
+                                        <span class="isactive">Active</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td><span class="ispending">Pending</span></td>
+                                }
                                 <td>
-                                    <span class="isactive">Active</span>
-                            </td>
-                            }
-                            else
-                            {
-                                <td><span class="ispending">Pending</span></td>
-                            }
-                            <td>
-                                <a href="/admin/edit/@item.Id" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="/admin/delete/@item.Id" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
+                                    <a href="/admin/edit/@item.Id" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-danger" onclick="ondelete(@item.Id)"><i class="fa fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
                         }
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function ondelete(id) {
+            if (confirm("Are you sure?")) {
+                $.get("/admin/delete/" + id);
+            }
+        }
+    </script>
+}
