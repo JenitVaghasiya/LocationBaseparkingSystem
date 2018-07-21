@@ -313,3 +313,15 @@ footer {
 .btn-google {
     background-color: #c32f10;
 }
+
+.isactive {
+    padding: 5px;
+    background-color: lawngreen;
+    border-radius: 5px;
+}
+
+.ispending {
+    padding: 5px;
+    background-color: #C36464;
+    border-radius: 5px;
+}

@@ -83,33 +83,40 @@ namespace LocationBaseparkingSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Email,Name,Longitude,Latitude,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area")] ParkOnVendor parkOnVendor)
+        public async Task<ActionResult> CreateOrUpdate([Bind(Include = "Id,UserId,Email,Name,Longitude,Latitude,Address,LandMark,NoOfParkingSpace,CreatedDate,IsActive,HourRate,Area")] ParkOnVendor parkOnVendor)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var user = db.Users.FirstOrDefault(u => u.Email == parkOnVendor.Email);
-                    if (user != null)
+                    if (parkOnVendor.Id > 0)
                     {
-                        var vendor = db.ParkOnVendor.FirstOrDefault(u => u.UserId == user.Id);
-                        if (vendor != null)
-                        {
-                            parkOnVendor.UserId = user.Id;
-                            vendor = parkOnVendor;
-                        }
+                        db.Entry(parkOnVendor).State = EntityState.Modified;
                     }
                     else
                     {
-                        var usr = new ApplicationUser { UserName = parkOnVendor.Email, Email = parkOnVendor.Email };
-                        var result = await UserManager.CreateAsync(usr, "P@$$w0rd");
-                        if (result.Succeeded)
+                        var user = db.Users.FirstOrDefault(u => u.Email == parkOnVendor.Email);
+                        if (user != null)
                         {
-                            await UserManager.AddToRoleAsync(usr.Id, "VendorAdmin");
-                            parkOnVendor.UserId = usr.Id;
-                            parkOnVendor.CreatedDate = DateTime.Now;
-                            db.ParkOnVendor.Add(parkOnVendor);
+                            var vendor = db.ParkOnVendor.FirstOrDefault(u => u.UserId == user.Id);
+                            if (vendor != null)
+                            {
+                                parkOnVendor.UserId = user.Id;
+                                vendor = parkOnVendor;
+                            }
+                        }
+                        else
+                        {
+                            var usr = new ApplicationUser { UserName = parkOnVendor.Email, Email = parkOnVendor.Email };
+                            var result = await UserManager.CreateAsync(usr, "P@$$w0rd");
+                            if (result.Succeeded)
+                            {
+                                await UserManager.AddToRoleAsync(usr.Id, "VendorAdmin");
+                                parkOnVendor.UserId = usr.Id;
+                                parkOnVendor.CreatedDate = DateTime.Now;
+                                db.ParkOnVendor.Add(parkOnVendor);
 
+                            }
                         }
                     }
                     await db.SaveChangesAsync();
@@ -119,7 +126,7 @@ namespace LocationBaseparkingSystem.Controllers
             {
 
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Edit/5
@@ -134,7 +141,7 @@ namespace LocationBaseparkingSystem.Controllers
             {
                 return HttpNotFound();
             }
-            return View(parkOnVendor);
+            return View("Create", parkOnVendor);
         }
 
         // POST: Admin/Edit/5
@@ -153,24 +160,8 @@ namespace LocationBaseparkingSystem.Controllers
             return View(parkOnVendor);
         }
 
-        // GET: Admin/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
-            if (parkOnVendor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(parkOnVendor);
-        }
-
         // POST: Admin/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             ParkOnVendor parkOnVendor = await db.ParkOnVendor.FindAsync(id);
