@@ -1,0 +1,55 @@
+/*  MyStyle For ParkOn */
+
+/* 1. Useful Styles */
+.spacet-5 {
+    margin-top: 5px;
+}
+
+.spacet-10 {
+    margin-top: 10px;
+}
+
+.spacet-50 {
+    margin-top: 50px;
+}
+
+.font-12 {
+    font-size: 12px;
+}
+
+.font-title {
+    font-size: 20px;
+}
+
+/* 2. Custom Logo */
+.custom-logo {
+    margin-top: -85px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Queries */
+@media screen and (max-width: 767px) {
+    .custom-logo {
+        margin-top: -65px;
+    }
+
+    .font-title {
+        font-size: 12px;
+    }
+}
