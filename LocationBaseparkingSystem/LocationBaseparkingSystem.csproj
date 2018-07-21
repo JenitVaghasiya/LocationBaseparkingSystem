@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201807210458265_InitialCreate.Designer.cs">
       <DependentUpon>201807210458265_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807210517171_AddParkOnTable.cs" />
+    <Compile Include="Migrations\201807210517171_AddParkOnTable.Designer.cs">
+      <DependentUpon>201807210517171_AddParkOnTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -295,6 +299,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807210458265_InitialCreate.resx">
       <DependentUpon>201807210458265_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807210517171_AddParkOnTable.resx">
+      <DependentUpon>201807210517171_AddParkOnTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
