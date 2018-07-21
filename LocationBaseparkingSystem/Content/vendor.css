@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.seat {
+    float: left;
+    display: block;
+    margin: 5px;
+}
+
+.seat-select {
+    display: none;
+}
+
+    .seat-select:checked + .seat {
+        /* background: #F44336;
+  -webkit-transition:   linear 1s;  For Safari 3.1 to 6.0 
+  transition: linear 1s;
+  -webkit-transform: scale3d(.95, 1.05, 1);
+  transform: scale3d(.95, 1.05, 1);*/
+    }
+
+.vendorFormInput {
+    border: 1px solid #d64161
+}
+
+.car {
+    color: #C36464;
+}
+
+    .car:hover {
+        cursor: pointer;
+        color: #bc6060 !important;
+    }
+
+#searchCustomer:focus {
+    border-color: #ffffff !important;
+}
+
+.active-pink-2 input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #f48fb1;
+    box-shadow: 0 1px 0 0 #f48fb1;
+}
+
+.active-pink input[type=text] {
+    border-bottom: 1px solid #f48fb1;
+    box-shadow: 0 1px 0 0 #f48fb1;
+}
+
+.searchBox {
+    border-color: #ffffff;
+    border-bottom-color: #b2b2b2;
+    border-radius: 0;
+}
+/*Vendor profile*/
+body {
+    font-family: "Lato", sans-serif;
+    transition: background-color .5s;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+    .sidenav a {
+        /* padding: 8px 8px 8px 32px;*/
+        text-decoration: none;
+        font-size: 25px;
+        color: #dd6b83;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:hover {
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 11px;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        color: #ffffff
+    }
+
+#main {
+    transition: margin-right .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+#updateProfile {
+    float: right;
+}
+
+#myprofile {
+    padding: 12px 8px 8px 34px;
+    background-color: #F0677C;
+    display: block;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+#vendorProfile {
+    padding-top: 2em;
+    padding: 2em;
+}
+
+.vendorAddress, .Email, .vendorName, .vendorID {
+    border-bottom: 1px solid #6e6c6c;
+    padding: 0.84em;
+    padding-left: 0;
+}
+
+.updateProfile {
+    padding-top: 2em;
+    float: right;
+}
+
+#updateProfile {
+    background-color: #C36464;
+    color: #ffffff;
+    border-radius: 0.5em;
+}
+
+.vendorImage {
+    text-align: center;
+    font-size: 60px;
+}
+
+.headerMyProfileSec {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.headerProfile {
+    font-size: 50px;
+    padding-right: 0.5em;
+}
+
+.myprofileText {
+    font-size: 20px;
+}
+
+.car-allocated {
+    color: grey;
+}

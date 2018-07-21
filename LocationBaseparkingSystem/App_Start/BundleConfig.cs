@@ -21,12 +21,14 @@ namespace LocationBaseparkingSystem
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/popper.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/assets/css/style.css",
-                      "~/assets/css/mystyle.css"));
+                      "~/assets/css/mystyle.css",
+                      "~/Content/vendor.css"));
         }
     }
 }

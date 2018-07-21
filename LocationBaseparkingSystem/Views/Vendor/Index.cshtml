@@ -1,81 +1,165 @@
-﻿@model IEnumerable<LocationBaseparkingSystem.Models.ParkOnVendorTrans>
+﻿@model LocationBaseparkingSystem.Models.ParkOnTransModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Parking Detail";
 }
 
-<h2>Index</h2>
+<style type="text/css">
+    a.car, a.car-allocated {
+        text-decoration: none;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.VenderID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CarNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EntryTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExitTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsOut)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalHours)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalCost)
-        </th>
-        <th></th>
-    </tr>
+        a.car-allocated:hover {
+            cursor: pointer;
+            color: grey !important;
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.VenderID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CarNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EntryTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExitTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalHours)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalCost)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+    label.error {
+        color: #C36464;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="page-head-line">Vendor Dashboard</h4>
+
+    </div>
+
+</div>
+<div class="row">
+    <!-- Search form -->
+    <div class="md-form active-pink-2 mb-3 col-lg-12 ">
+        <input id="txtsearchCustomer" class="form-control searchBox" type="text" placeholder="Search" aria-label="Search">
+    </div>
+</div>
+<div class="row" style="padding-top:10px" id="listvehicles">
+    <input type="hidden" id="vendorId" value="@Model.VendorId" />
+    @foreach (var tran in Model.ParkOnVendorTrans)
+    {
+        <section class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-3">
+            <input id="seat-3" class="seat-select" type="checkbox" value="3" name="seat[]" />
+            <a for="seat-3" class="fa fa-car fa-5x car-allocated" href="javascript:void(0);" onclick="openModel(@tran.Id,'@tran.CarNo','@tran.CustomerName',@tran.PhoneNo);"></a>
+            <label for="seat-3" style="display:none">@tran.CarNo @tran.PhoneNo</label>
+        </section>
+    }
+    @for (int i = 1; i <= Model.NoOfRemainingParking; i++)
+    {
+        <section class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-3">
+            <input id="seat-3" class="seat-select" type="checkbox" value="3" name="seat[]" />
+            <a for="seat-3" class="fa fa-car fa-5x car" href="javascript:void(0);" onclick="opencleanModel();"></a>
+            <label for="seat-3" style="display:none"></label>
+        </section>
+    }
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enter Parking</h4>
+            </div>
+
+            <!-- Modal body -->
+            <form class="modal-body" id="vehicledetail" novalidate>
+                <input type="hidden" id="transNo" value="" />
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label customerPhoneNo spacet-10">CUSTOMER PHONE NUMBER</label>
+                        <input type="text" class="form-control vendorFormInput" id="customerPhoneNo" name="customerPhoneNo" required />
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label vehicalNo ">VEHICAL NUMBER</label>
+                        <input type="text" class="form-control vendorFormInput" id="vehicalNo" name="vehicalNo" required />
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label customerName spacet-10">CUSTOMER NAME</label>
+                        <input type="text" class="form-control vendorFormInput" id="customername" name="customername" required />
+                    </div>
+                    <div class="form-group col-md-12" id="showisout">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="isout"> Is out
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="submitdetail();">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $('#txtsearchCustomer').on('input propertychange paste', function () {
+            var value = $("#txtsearchCustomer").val().toLowerCase();
+            $("#listvehicles label").filter(function () {
+                if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                    $(this).parent().toggle(true);
+                }
+                else {
+                    $(this).parent().toggle(false);
+                }
+            });
+        });
+
+        function openModel(tranId, tranCarNo, tranCustomerName, tranPhoneNo) {
+            $("#showisout").show();
+            $("#transNo").val(tranId);
+            $("#vehicalNo").val(tranCarNo);
+            $("#customerPhoneNo").val(tranPhoneNo);
+            $("#customername").val(tranCustomerName);
+            $("#myModal").modal("show");
+        }
+
+        function opencleanModel() {
+            $("#showisout").hide();
+            $("#transNo").val(0);
+            $("#vehicalNo").val('');
+            $("#customerPhoneNo").val('');
+            $("#customername").val('');
+            $("#isout").prop("checked", false);
+            $("#myModal").modal("show");
+            $("#vehicledetail")[0].reset();
+        }
+
+        function submitdetail() {
+            if ($("#vehicledetail").valid()) {
+
+                var detail =
+                    {
+                        Id: $("#transNo").val(),
+                        CustomerName: $("#customername").val(),
+                        PhoneNo: $("#customerPhoneNo").val(),
+                        CarNo: $("#vehicalNo").val(),
+                        IsOut: $("#isout").prop("checked"),
+                        VenderID : $("#vendorId").val()
+                    };
+
+                $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddUpdateVehicleDetail", "Vendor")",
+                datatype: "json",
+                traditional: true,
+                    data: detail,
+                    success: function (result) {
+                    if (result == "True") {
+                        $("#addLocation").modal("hide");
+                        window.location.reload();
+                    }
+                }
+            });
+            }
+        }
+    </script>
 }
-
-</table>

@@ -23,12 +23,11 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 font-12">
                     <strong>Email: </strong>info@parkon.com
                     &nbsp;&nbsp;
                     <strong>Support: </strong>+98-765-432-10
                 </div>
-
             </div>
         </div>
     </header>
@@ -42,7 +41,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">
-                    <img src="../assets/img/logo.png" />
+                    <img src="../assets/img/logo.png" class="custom-logo" />
                 </a>
             </div>
             @if (!User.Identity.IsAuthenticated)
@@ -53,35 +52,62 @@
                     </a>
                 </div>
             }
-            else
+            else if (User.Identity.IsAuthenticated && User.IsInRole("VendorAdmin"))
             {
                 <div class="left-div">
                     <div class="user-settings-wrapper">
                         <ul class="nav">
-
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-settings">
-                                    <div class="media">
-                                        <a class="media-left" href="#">
-                                            <img src="../assets/img/64-64.jpg" alt="" class="img-rounded" />
-                                        </a>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">@User.Identity.Name</h5>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <a href="/account/logoff" class="btn btn-danger btn-sm">Logout</a>
-                                </div>
-                            </li>
+                            <span class='headerMyProfileSec' style="color:white" onclick="openNav()"><span class="fa fa-user headerProfile"></span><span class="myprofileText">My Profile</span></span>
                         </ul>
                     </div>
                 </div>
             }
+            <div id="mySidenav" class="sidenav">
+                <span id="myprofile">My Profile</span>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div id="vendorProfile" class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <span class="fa fa-user vendorImage"></span>
+                        </div>
+                    </div>
+                    @*<div class="row vendorName">
+                            <div id="vendorName" class="col-lg-12 col-md-12 col-sm-12">@User.Identity.Name</div>
+                        </div>*@
+                    <div class="row vendorID">
+                        <div id="vendorID" class="col-lg-12 col-md-12 col-sm-12">5542451</div>
+                    </div>
+                    <div class="row vendorAddress">
+                        <div id="vendorAddress" class="col-lg-12 col-md-12 col-sm-12">
+                            <p>
+                                Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+                                "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row Email">
+                        <div id="Email" class="col-lg-12 col-md-12 col-sm-12">
+                            <p>@User.Identity.Name</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                            <li><a href="/account/logoff">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
     <!-- LOGO HEADER END-->
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
@@ -103,5 +129,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "350px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
 </body>
 </html>
