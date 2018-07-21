@@ -29,5 +29,7 @@ namespace LocationBaseparkingSystem.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<LocationBaseparkingSystem.Models.ParkOnVendor> ParkOnVendors { get; set; }
     }
 }
