@@ -87,40 +87,37 @@ namespace LocationBaseparkingSystem.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (parkOnVendor.Id > 0)
                 {
-                    if (parkOnVendor.Id > 0)
+                    db.Entry(parkOnVendor).State = EntityState.Modified;
+                }
+                else
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Email == parkOnVendor.Email);
+                    if (user != null)
                     {
-                        db.Entry(parkOnVendor).State = EntityState.Modified;
+                        var vendor = db.ParkOnVendor.FirstOrDefault(u => u.UserId == user.Id);
+                        if (vendor != null)
+                        {
+                            parkOnVendor.UserId = user.Id;
+                            vendor = parkOnVendor;
+                        }
                     }
                     else
                     {
-                        var user = db.Users.FirstOrDefault(u => u.Email == parkOnVendor.Email);
-                        if (user != null)
+                        var usr = new ApplicationUser { UserName = parkOnVendor.Email, Email = parkOnVendor.Email };
+                        var result = await UserManager.CreateAsync(usr, "P@$$w0rd");
+                        if (result.Succeeded)
                         {
-                            var vendor = db.ParkOnVendor.FirstOrDefault(u => u.UserId == user.Id);
-                            if (vendor != null)
-                            {
-                                parkOnVendor.UserId = user.Id;
-                                vendor = parkOnVendor;
-                            }
-                        }
-                        else
-                        {
-                            var usr = new ApplicationUser { UserName = parkOnVendor.Email, Email = parkOnVendor.Email };
-                            var result = await UserManager.CreateAsync(usr, "P@$$w0rd");
-                            if (result.Succeeded)
-                            {
-                                await UserManager.AddToRoleAsync(usr.Id, "VendorAdmin");
-                                parkOnVendor.UserId = usr.Id;
-                                parkOnVendor.CreatedDate = DateTime.Now;
-                                db.ParkOnVendor.Add(parkOnVendor);
+                            await UserManager.AddToRoleAsync(usr.Id, "VendorAdmin");
+                            parkOnVendor.UserId = usr.Id;
+                            parkOnVendor.CreatedDate = DateTime.Now;
+                            db.ParkOnVendor.Add(parkOnVendor);
 
-                            }
                         }
                     }
-                    await db.SaveChangesAsync();
                 }
+                await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
