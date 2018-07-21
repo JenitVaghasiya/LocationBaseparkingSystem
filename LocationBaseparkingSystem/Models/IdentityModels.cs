@@ -21,7 +21,7 @@ namespace LocationBaseparkingSystem.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("LocationDBConnection", throwIfV1Schema: false)
         {
         }
 
